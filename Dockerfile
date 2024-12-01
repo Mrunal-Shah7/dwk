@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the Spring Boot JAR file to the container
-COPY target/dwk.jar app.jar
+COPY target/dwk-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose the port your application will run on
 EXPOSE 8080
