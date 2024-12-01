@@ -1,14 +1,12 @@
-# Use OpenJDK as the base image
-FROM openjdk:17-jdk-slim
+FROM maven:3.8.5-openjdk-17 AS build
+COPY . .
 
-# Set the working directory inside the container
-WORKDIR /app
+RUN mvn clean package -DskipTests
 
-# Copy the Spring Boot JAR file to the container
-COPY target/dwk-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose the port your application will run on
+FROM openjdk:17.0.1-jdk-slim
+COPY --from=build /target/dwk-0.0.1-SNAPSHOT.jar app.jar
+
 EXPOSE 8080
 
-# Command to run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
