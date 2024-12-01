@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -32,6 +32,11 @@ public class ReservationController {
     @GetMapping("/get/{name}")
     public Reservation getReservation(@PathVariable String name) throws ExecutionException,InterruptedException {
         return reservationService.getReservation(name);
+    }
+
+    @GetMapping("/get/all")
+    public List<Reservation> getAllReservations()throws ExecutionException,InterruptedException{
+            return reservationService.getAllReservations();
     }
 
 

@@ -31,3 +31,18 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignore specific credential files
+*.env
+**/firebase-credentials.json
+application-local.properties
+
+# Ignore entire sensitive config directories
+**/config/secrets/
+**/credentials/
+# Add to existing .gitignore
+**/ServiceAccountKey.json
+# Spring Boot specific ignores
+
+.gradle
+

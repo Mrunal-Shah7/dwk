@@ -1,14 +1,13 @@
 package com.xenostar.dwk.Service;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QuerySnapshot;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.xenostar.dwk.Entity.Reservation;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -36,5 +35,22 @@ public class ReservationService {
         }
 
     }
-}
 
+    public List<Reservation> getAllReservations() throws ExecutionException,InterruptedException{
+        Firestore db = FirestoreClient.getFirestore();
+        ApiFuture<QuerySnapshot> future = db.collection(COLLECTION_NAME).get();
+        QuerySnapshot querySnapshot = future.get();
+
+        List<Reservation> reservations = new ArrayList<>();
+
+        if(!querySnapshot.isEmpty()){
+            for(QueryDocumentSnapshot document: querySnapshot.getDocuments()){
+                reservations.add(document.toObject(Reservation.class));
+            }
+        }
+        return reservations;
+
+    }
+
+
+}
